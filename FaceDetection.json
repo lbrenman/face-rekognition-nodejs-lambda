@@ -1,0 +1,1266 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0",
+    "title": "FaceDetection",
+    "description": "Face detection based on Rekognition",
+    "termsOfService": "https://github.com/lbrenman",
+    "contact": {
+      "name": "Leor Brenman",
+      "url": "https://github.com/lbrenman",
+      "email": "lbrenman99@hotmail.com"
+    },
+    "license": {
+      "url": "https://github.com/lbrenman",
+      "name": "N/A"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "localhost"
+    }
+  ],
+  "paths": {
+    "/collection": {
+      "post": {
+        "tags": [
+          "collection"
+        ],
+        "summary": "Create New Collection",
+        "description": "Create a new collection",
+        "operationId": "post-collection",
+        "requestBody": {
+          "description": "Post the necessary fields for the API to create a new user.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCollectionBody"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "collectionId": "my-collection-id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCollectionResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "50189d02-727d-4a4e-af6a-1aff2ed7ed5f",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "CollectionArn": "aws:rekognition:us-east-1:411427429079:collection/test-collection",
+                      "FaceModelVersion": "7.0",
+                      "StatusCode": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Missing collectionId in request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to create collection"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "collection"
+        ],
+        "summary": "Delete Collection",
+        "description": "Delete collection",
+        "operationId": "delete-collection",
+        "parameters": [
+          {
+            "name": "collectionId",
+            "in": "query",
+            "description": "Collection Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteCollectionResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "22563b86-4732-454d-a6e3-d3879eb27d31",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "StatusCode": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Missing collectionId in request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to delete collection"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "collection"
+        ],
+        "summary": "Get collections list",
+        "description": "Get collections",
+        "operationId": "get-collection",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCollectionsResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "712f9102-86d4-4890-9545-376565f41a6f",
+                        "attempts": 2,
+                        "totalRetryDelay": 79
+                      },
+                      "CollectionIds": [
+                        "home-collection",
+                        "test-collection"
+                      ],
+                      "FaceModelVersions": [
+                        "7.0",
+                        "7.0"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to list collections"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    },
+    "/listfaces": {
+      "get": {
+        "tags": [
+          "face"
+        ],
+        "summary": "List Faces",
+        "description": "List faces in collection",
+        "operationId": "get-listfaces",
+        "parameters": [
+          {
+            "name": "collectionId",
+            "in": "query",
+            "description": "Collection Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListFacesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to list faces"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    },
+    "/indexface": {
+      "post": {
+        "tags": [
+          "face"
+        ],
+        "summary": "Index face",
+        "description": "Index (add) face to collection",
+        "operationId": "post-indexface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IndexFaceBody"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "collectionId": "{{collectionId}}",
+                    "name": "Leor_Brenman",
+                    "image": "/9j/4QsgRXhp....Wf/9k="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexFaceResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "134bca3f-b03e-4e65-ad3a-820e989023f7",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "FaceModelVersion": "7.0",
+                      "FaceRecords": [
+                        {
+                          "Face": {
+                            "BoundingBox": {
+                              "Height": 0.7258708477020264,
+                              "Left": 0.2794835865497589,
+                              "Top": 0.17977413535118103,
+                              "Width": 0.6197726130485535
+                            },
+                            "Confidence": 99.99959564208984,
+                            "ExternalImageId": "Leor_Brenman",
+                            "FaceId": "32139e59-cb4c-4e5a-a55d-4434524d668a",
+                            "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb"
+                          },
+                          "FaceDetail": {
+                            "BoundingBox": {
+                              "Height": 0.7258708477020264,
+                              "Left": 0.2794835865497589,
+                              "Top": 0.17977413535118103,
+                              "Width": 0.6197726130485535
+                            },
+                            "Confidence": 99.99959564208984,
+                            "Landmarks": [
+                              {
+                                "Type": "eyeLeft",
+                                "X": 0.4589076042175293,
+                                "Y": 0.46522384881973267
+                              },
+                              {
+                                "Type": "eyeRight",
+                                "X": 0.742435872554779,
+                                "Y": 0.4868306815624237
+                              },
+                              {
+                                "Type": "mouthLeft",
+                                "X": 0.44911429286003113,
+                                "Y": 0.6887190937995911
+                              },
+                              {
+                                "Type": "mouthRight",
+                                "X": 0.6856570839881897,
+                                "Y": 0.7065992951393127
+                              },
+                              {
+                                "Type": "nose",
+                                "X": 0.5924394130706787,
+                                "Y": 0.598292350769043
+                              }
+                            ],
+                            "Pose": {
+                              "Pitch": 4.6284027099609375,
+                              "Roll": 5.986340045928955,
+                              "Yaw": 1.83180570602417
+                            },
+                            "Quality": {
+                              "Brightness": 73.77278900146484,
+                              "Sharpness": 99.39799499511719
+                            }
+                          }
+                        }
+                      ],
+                      "UnindexedFaces": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Missing image, name or collectionId in request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to add image to collection"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    },
+    "/detectface": {
+      "post": {
+        "tags": [
+          "face"
+        ],
+        "summary": "Detect face",
+        "description": "Detect face",
+        "operationId": "post-detectface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DetectFaceBody"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "collectionId": "{{collectionId}}",
+                    "image": "/9j/4QsgRXhp....Wf/9k="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectFaceResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "fb38a787-9556-42ab-bea1-57d614cabce0",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "FaceMatches": [
+                        {
+                          "Face": {
+                            "BoundingBox": {
+                              "Height": 0.7258710265159607,
+                              "Left": 0.27948400378227234,
+                              "Top": 0.17977400124073029,
+                              "Width": 0.6197729706764221
+                            },
+                            "Confidence": 99.99960327148438,
+                            "ExternalImageId": "Leor_Brenman",
+                            "FaceId": "32139e59-cb4c-4e5a-a55d-4434524d668a",
+                            "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb",
+                            "IndexFacesModelVersion": "7.0"
+                          },
+                          "Similarity": 100
+                        }
+                      ],
+                      "FaceModelVersion": "7.0",
+                      "SearchedFaceBoundingBox": {
+                        "Height": 0.7258708477020264,
+                        "Left": 0.2794835865497589,
+                        "Top": 0.17977413535118103,
+                        "Width": 0.6197726130485535
+                      },
+                      "SearchedFaceConfidence": 99.99959564208984
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to process image"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "collection"
+    },
+    {
+      "name": "face"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "CreateCollectionBody": {
+        "type": "object",
+        "description": "Create collection body",
+        "properties": {
+          "collectionId": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "collectionId": "my-collection-id"
+          }
+        }
+      },
+      "CreateCollectionResponse": {
+        "type": "object",
+        "description": "Create collection response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "CollectionArn": {
+            "type": "string"
+          },
+          "FaceModelVersion": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "type": "integer"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "35bb3c99-467c-412d-a0a7-b56a009a7847",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "CollectionArn": "aws:rekognition:us-east-1:411427429079:collection/test-collection",
+            "FaceModelVersion": "7.0",
+            "StatusCode": 200
+          }
+        }
+      },
+      "GeneralErrorResponse": {
+        "type": "object",
+        "description": "General error response",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "error": "Failed to create collection"
+          }
+        }
+      },
+      "DeleteCollectionResponse": {
+        "type": "object",
+        "description": "Delete collection response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "StatusCode": {
+            "type": "integer"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "4cb78e8d-ba4e-4608-a1cd-e59d389b9388",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "StatusCode": 200
+          }
+        }
+      },
+      "ListCollectionsResponse": {
+        "type": "object",
+        "description": "List collections response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "CollectionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "FaceModelVersions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "1aee94c9-a166-439b-b217-e155dec32b14",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "CollectionIds": [
+              "home-collection"
+            ],
+            "FaceModelVersions": [
+              "7.0"
+            ]
+          }
+        }
+      },
+      "ListFacesResponse": {
+        "type": "object",
+        "description": "List faces response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "FaceModelVersion": {
+            "type": "string"
+          },
+          "Faces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "BoundingBox": {
+                  "type": "object",
+                  "properties": {
+                    "Height": {
+                      "type": "number"
+                    },
+                    "Left": {
+                      "type": "number"
+                    },
+                    "Top": {
+                      "type": "number"
+                    },
+                    "Width": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "Confidence": {
+                  "type": "number"
+                },
+                "ExternalImageId": {
+                  "type": "string"
+                },
+                "FaceId": {
+                  "type": "string"
+                },
+                "ImageId": {
+                  "type": "string"
+                },
+                "IndexFacesModelVersion": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "4e547d8f-1a39-4378-bc69-05cd32b3ea0c",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "FaceModelVersion": "7.0",
+            "Faces": [
+              {
+                "BoundingBox": {
+                  "Height": 0.41832399368286133,
+                  "Left": 0.2591229975223541,
+                  "Top": 0.2367130070924759,
+                  "Width": 0.4781549870967865
+                },
+                "Confidence": 99.99970245361328,
+                "ExternalImageId": "Melisa_Corkum",
+                "FaceId": "2353f601-4b73-41f4-8602-3c268df6294e",
+                "ImageId": "7ae26521-ef8c-3265-93ce-79430e89fc2a",
+                "IndexFacesModelVersion": "7.0"
+              },
+              {
+                "BoundingBox": {
+                  "Height": 0.07936760038137436,
+                  "Left": 0.9018149971961975,
+                  "Top": 0.24348999559879303,
+                  "Width": 0.07171910256147385
+                },
+                "Confidence": 99.45669555664062,
+                "ExternalImageId": "Melisa_Corkum",
+                "FaceId": "46d6997f-9703-4f4e-9933-14d056025451",
+                "ImageId": "7ae26521-ef8c-3265-93ce-79430e89fc2a",
+                "IndexFacesModelVersion": "7.0"
+              },
+              {
+                "BoundingBox": {
+                  "Height": 0.5732409954071045,
+                  "Left": 0.2769010066986084,
+                  "Top": 0.2353460043668747,
+                  "Width": 0.5366209745407104
+                },
+                "Confidence": 99.99919891357422,
+                "ExternalImageId": "Bella_Brenman",
+                "FaceId": "80cd4058-3ffa-481a-bf00-fd9858f4e302",
+                "ImageId": "fef2b862-4c9a-3884-9860-8c241dc6fbcd",
+                "IndexFacesModelVersion": "7.0"
+              },
+              {
+                "BoundingBox": {
+                  "Height": 0.7258710265159607,
+                  "Left": 0.27948400378227234,
+                  "Top": 0.17977400124073029,
+                  "Width": 0.6197729706764221
+                },
+                "Confidence": 99.99960327148438,
+                "ExternalImageId": "Leor_Brenman",
+                "FaceId": "832f4726-e9ea-45cc-867a-b4e35d8ecf84",
+                "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb",
+                "IndexFacesModelVersion": "7.0"
+              }
+            ]
+          }
+        }
+      },
+      "IndexFaceBody": {
+        "type": "object",
+        "description": "Index face body",
+        "properties": {
+          "collectionId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "collectionId": "{{collectionId}}",
+            "name": "Leor_Brenman",
+            "image": "/9j/4QsgRXhp....Wf/9k="
+          }
+        }
+      },
+      "IndexFaceResponse": {
+        "type": "object",
+        "description": "Ondex face response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "FaceModelVersion": {
+            "type": "string"
+          },
+          "FaceRecords": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Face": {
+                  "type": "object",
+                  "properties": {
+                    "BoundingBox": {
+                      "type": "object",
+                      "properties": {
+                        "Height": {
+                          "type": "number"
+                        },
+                        "Left": {
+                          "type": "number"
+                        },
+                        "Top": {
+                          "type": "number"
+                        },
+                        "Width": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "Confidence": {
+                      "type": "number"
+                    },
+                    "ExternalImageId": {
+                      "type": "string"
+                    },
+                    "FaceId": {
+                      "type": "string"
+                    },
+                    "ImageId": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "FaceDetail": {
+                  "type": "object",
+                  "properties": {
+                    "BoundingBox": {
+                      "type": "object",
+                      "properties": {
+                        "Height": {
+                          "type": "number"
+                        },
+                        "Left": {
+                          "type": "number"
+                        },
+                        "Top": {
+                          "type": "number"
+                        },
+                        "Width": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "Confidence": {
+                      "type": "number"
+                    },
+                    "Landmarks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Type": {
+                            "type": "string"
+                          },
+                          "X": {
+                            "type": "number"
+                          },
+                          "Y": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "Pose": {
+                      "type": "object",
+                      "properties": {
+                        "Pitch": {
+                          "type": "number"
+                        },
+                        "Roll": {
+                          "type": "number"
+                        },
+                        "Yaw": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "Quality": {
+                      "type": "object",
+                      "properties": {
+                        "Brightness": {
+                          "type": "number"
+                        },
+                        "Sharpness": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "UnindexedFaces": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "134bca3f-b03e-4e65-ad3a-820e989023f7",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "FaceModelVersion": "7.0",
+            "FaceRecords": [
+              {
+                "Face": {
+                  "BoundingBox": {
+                    "Height": 0.7258708477020264,
+                    "Left": 0.2794835865497589,
+                    "Top": 0.17977413535118103,
+                    "Width": 0.6197726130485535
+                  },
+                  "Confidence": 99.99959564208984,
+                  "ExternalImageId": "Leor_Brenman",
+                  "FaceId": "32139e59-cb4c-4e5a-a55d-4434524d668a",
+                  "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb"
+                },
+                "FaceDetail": {
+                  "BoundingBox": {
+                    "Height": 0.7258708477020264,
+                    "Left": 0.2794835865497589,
+                    "Top": 0.17977413535118103,
+                    "Width": 0.6197726130485535
+                  },
+                  "Confidence": 99.99959564208984,
+                  "Landmarks": [
+                    {
+                      "Type": "eyeLeft",
+                      "X": 0.4589076042175293,
+                      "Y": 0.46522384881973267
+                    },
+                    {
+                      "Type": "eyeRight",
+                      "X": 0.742435872554779,
+                      "Y": 0.4868306815624237
+                    },
+                    {
+                      "Type": "mouthLeft",
+                      "X": 0.44911429286003113,
+                      "Y": 0.6887190937995911
+                    },
+                    {
+                      "Type": "mouthRight",
+                      "X": 0.6856570839881897,
+                      "Y": 0.7065992951393127
+                    },
+                    {
+                      "Type": "nose",
+                      "X": 0.5924394130706787,
+                      "Y": 0.598292350769043
+                    }
+                  ],
+                  "Pose": {
+                    "Pitch": 4.6284027099609375,
+                    "Roll": 5.986340045928955,
+                    "Yaw": 1.83180570602417
+                  },
+                  "Quality": {
+                    "Brightness": 73.77278900146484,
+                    "Sharpness": 99.39799499511719
+                  }
+                }
+              }
+            ],
+            "UnindexedFaces": []
+          }
+        }
+      },
+      "DetectFaceBody": {
+        "type": "object",
+        "description": "Detect face body",
+        "properties": {
+          "collectionId": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "collectionId": "{{collectionId}}",
+            "image": "/9j/4QsgRXhp....Wf/9k="
+          }
+        }
+      },
+      "DetectFaceResponse": {
+        "type": "object",
+        "description": "Detect face response",
+        "properties": {
+          "$metadata": {
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "type": "integer"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "attempts": {
+                "type": "integer"
+              },
+              "totalRetryDelay": {
+                "type": "integer"
+              }
+            }
+          },
+          "FaceMatches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Face": {
+                  "type": "object",
+                  "properties": {
+                    "BoundingBox": {
+                      "type": "object",
+                      "properties": {
+                        "Height": {
+                          "type": "number"
+                        },
+                        "Left": {
+                          "type": "number"
+                        },
+                        "Top": {
+                          "type": "number"
+                        },
+                        "Width": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "Confidence": {
+                      "type": "number"
+                    },
+                    "ExternalImageId": {
+                      "type": "string"
+                    },
+                    "FaceId": {
+                      "type": "string"
+                    },
+                    "ImageId": {
+                      "type": "string"
+                    },
+                    "IndexFacesModelVersion": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "Similarity": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "FaceModelVersion": {
+            "type": "string"
+          },
+          "SearchedFaceBoundingBox": {
+            "type": "object",
+            "properties": {
+              "Height": {
+                "type": "number"
+              },
+              "Left": {
+                "type": "number"
+              },
+              "Top": {
+                "type": "number"
+              },
+              "Width": {
+                "type": "number"
+              }
+            }
+          },
+          "SearchedFaceConfidence": {
+            "type": "number"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "$metadata": {
+              "httpStatusCode": 200,
+              "requestId": "fb38a787-9556-42ab-bea1-57d614cabce0",
+              "attempts": 1,
+              "totalRetryDelay": 0
+            },
+            "FaceMatches": [
+              {
+                "Face": {
+                  "BoundingBox": {
+                    "Height": 0.7258710265159607,
+                    "Left": 0.27948400378227234,
+                    "Top": 0.17977400124073029,
+                    "Width": 0.6197729706764221
+                  },
+                  "Confidence": 99.99960327148438,
+                  "ExternalImageId": "Leor_Brenman",
+                  "FaceId": "32139e59-cb4c-4e5a-a55d-4434524d668a",
+                  "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb",
+                  "IndexFacesModelVersion": "7.0"
+                },
+                "Similarity": 100
+              }
+            ],
+            "FaceModelVersion": "7.0",
+            "SearchedFaceBoundingBox": {
+              "Height": 0.7258708477020264,
+              "Left": 0.2794835865497589,
+              "Top": 0.17977413535118103,
+              "Width": 0.6197726130485535
+            },
+            "SearchedFaceConfidence": 99.99959564208984
+          }
+        }
+      }
+    }
+  }
+}
