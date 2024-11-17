@@ -7,3 +7,5 @@ Most of the [Storage-based API operations](https://docs.aws.amazon.com/rekogniti
 Methods for managing collections, indexing and detecting faces from images in collections are implemented.
 
 [Open API 3.0 specification](https://raw.githubusercontent.com/lbrenman/face-rekognition-nodejs-lambda/refs/heads/master/FaceDetection.json) included
+
+A NodeJS/Express desktop/mobile web app for managing collections, indexing face images and detecting faces in images can be found [here](https://github.com/lbrenman/facedetection-mobileapp-nodejs-express).
