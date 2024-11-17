@@ -1,4 +1,4 @@
-import { RekognitionClient, DetectFacesCommand } from "@aws-sdk/client-rekognition";
+import { RekognitionClient, SearchFacesByImageCommand } from "@aws-sdk/client-rekognition";
 
 export const handler = async (event) => {
     const body = JSON.parse(event.body);
@@ -11,13 +11,14 @@ export const handler = async (event) => {
     const client = new RekognitionClient({ region: "us-east-1" });
 
     const params = {
+        CollectionId: collectionId,
         Image: {
             Bytes: buffer
         }
     };
 
     try {
-        const command = new DetectFacesCommand(params);
+        const command = new SearchFacesByImageCommand(params);
         const response = await client.send(command);
         return {
             statusCode: 200,

@@ -289,6 +289,34 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListFacesResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "3dfef85c-7c15-4f07-9e29-17747acc06a6",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "FaceModelVersion": "7.0",
+                      "Faces": [
+                        {
+                          "BoundingBox": {
+                            "Height": 0.7258710265159607,
+                            "Left": 0.27948400378227234,
+                            "Top": 0.17977400124073029,
+                            "Width": 0.6197729706764221
+                          },
+                          "Confidence": 99.99960327148438,
+                          "ExternalImageId": "Leor_Brenman",
+                          "FaceId": "4ec3a4d7-64fc-4b14-86f7-4888e21e3dd6",
+                          "ImageId": "6e8be114-7d55-3464-ae56-8d1ab19f15bb",
+                          "IndexFacesModelVersion": "7.0"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -474,19 +502,19 @@
         ]
       }
     },
-    "/detectface": {
+    "/searchfacebyimage": {
       "post": {
         "tags": [
           "face"
         ],
-        "summary": "Detect face",
-        "description": "Detect face",
-        "operationId": "post-detectface",
+        "summary": "Search face by image",
+        "description": "Search face by image",
+        "operationId": "post-searchfacebyimage",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DetectFaceBody"
+                "$ref": "#/components/schemas/SearchFaceByImageBody"
               },
               "examples": {
                 "Example 1": {
@@ -505,7 +533,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DetectFaceResponse"
+                  "$ref": "#/components/schemas/SearchFaceByImageResponse"
                 },
                 "examples": {
                   "Example 1": {
@@ -542,6 +570,125 @@
                         "Width": 0.6197726130485535
                       },
                       "SearchedFaceConfidence": 99.99959564208984
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "Failed to process image"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    },
+    "/detectface": {
+      "post": {
+        "tags": [
+          "face"
+        ],
+        "summary": "Your POST endpoint",
+        "operationId": "post-detectface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DetectFaceBody"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "image": "/9j/4QsgR....9Wf/9k="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectFaceResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "$metadata": {
+                        "httpStatusCode": 200,
+                        "requestId": "3b840cf2-d005-4b5b-837b-12c591465596",
+                        "attempts": 1,
+                        "totalRetryDelay": 0
+                      },
+                      "FaceDetails": [
+                        {
+                          "BoundingBox": {
+                            "Height": 0.7258708477020264,
+                            "Left": 0.2794835865497589,
+                            "Top": 0.17977413535118103,
+                            "Width": 0.6197726130485535
+                          },
+                          "Confidence": 99.99959564208984,
+                          "Landmarks": [
+                            {
+                              "Type": "eyeLeft",
+                              "X": 0.4589076042175293,
+                              "Y": 0.46522384881973267
+                            },
+                            {
+                              "Type": "eyeRight",
+                              "X": 0.742435872554779,
+                              "Y": 0.4868306815624237
+                            },
+                            {
+                              "Type": "mouthLeft",
+                              "X": 0.44911429286003113,
+                              "Y": 0.6887190937995911
+                            },
+                            {
+                              "Type": "mouthRight",
+                              "X": 0.6856570839881897,
+                              "Y": 0.7065992951393127
+                            },
+                            {
+                              "Type": "nose",
+                              "X": 0.5924394130706787,
+                              "Y": 0.598292350769043
+                            }
+                          ],
+                          "Pose": {
+                            "Pitch": 4.6284027099609375,
+                            "Roll": 5.986340045928955,
+                            "Yaw": 1.83180570602417
+                          },
+                          "Quality": {
+                            "Brightness": 73.77278900146484,
+                            "Sharpness": 99.39799499511719
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -1113,9 +1260,9 @@
           }
         }
       },
-      "DetectFaceBody": {
+      "SearchFaceByImageBody": {
         "type": "object",
-        "description": "Detect face body",
+        "description": "Search face by image body",
         "properties": {
           "collectionId": {
             "type": "string"
@@ -1131,7 +1278,7 @@
           }
         }
       },
-      "DetectFaceResponse": {
+      "SearchFaceByImageResponse": {
         "type": "object",
         "description": "Detect face response",
         "properties": {
@@ -1260,6 +1407,23 @@
             "SearchedFaceConfidence": 99.99959564208984
           }
         }
+      },
+      "DetectFaceBody": {
+        "type": "object",
+        "description": "Detect face body",
+        "properties": {
+          "image": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "image": "/9j/4QsgR....9Wf/9k="
+          }
+        }
+      },
+      "DetectFaceResponse": {
+        "$ref": "#/components/schemas/SearchFaceByImageResponse"
       }
     }
   }
