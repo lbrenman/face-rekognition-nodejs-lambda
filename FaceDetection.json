@@ -607,7 +607,8 @@
         "tags": [
           "face"
         ],
-        "summary": "Your POST endpoint",
+        "summary": "Detect Face",
+        "description": "Detect face from image",
         "operationId": "post-detectface",
         "requestBody": {
           "content": {
@@ -706,6 +707,116 @@
                   "Example 1": {
                     "value": {
                       "error": "Failed to process image"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "localhost"
+          }
+        ]
+      }
+    },
+    "/searchface": {
+      "post": {
+        "summary": "Search faces",
+        "description": "Search faces in image against the collection",
+        "operationId": "post-searchface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchFaceBody"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "collectionId": "{{collectionId}}",
+                    "image": "/9j/4QsgRXh...uO/jT9Wf/9k="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchFaceResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "face": {
+                          "BoundingBox": {
+                            "Height": 0.527351975440979,
+                            "Left": 0.27057701349258423,
+                            "Top": 0.3046559989452362,
+                            "Width": 0.49737998843193054
+                          },
+                          "Confidence": 99.99930572509766,
+                          "ExternalImageId": "Leor",
+                          "FaceId": "6d7925bd-bc9e-4364-8e99-5c822bc27849",
+                          "ImageId": "07937681-040a-3bb5-9b21-b04813157d65",
+                          "IndexFacesModelVersion": "7.0"
+                        }
+                      },
+                      {
+                        "face": {
+                          "BoundingBox": {
+                            "Height": 0.6196410059928894,
+                            "Left": 0.14861400425434113,
+                            "Top": 0.22317300736904144,
+                            "Width": 0.5956529974937439
+                          },
+                          "Confidence": 99.99930572509766,
+                          "ExternalImageId": "Melissa",
+                          "FaceId": "da63a7cd-18ea-4387-a067-d212790349ec",
+                          "ImageId": "51bbf09d-6491-31a9-b1f6-0ef47063486c",
+                          "IndexFacesModelVersion": "7.0"
+                        }
+                      },
+                      {
+                        "face": {
+                          "BoundingBox": {
+                            "Height": 0.607026994228363,
+                            "Left": 0.23435400426387787,
+                            "Top": 0.33496201038360596,
+                            "Width": 0.5842509865760803
+                          },
+                          "Confidence": 99.99970245361328,
+                          "ExternalImageId": "Bella",
+                          "FaceId": "a2fcf7d3-7734-4706-9564-4d6ff33a2b6f",
+                          "ImageId": "07d6d5f3-8267-3ad9-9561-72cb506a5376",
+                          "IndexFacesModelVersion": "7.0"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "error": "No faces detected in the image."
                     }
                   }
                 }
@@ -1424,6 +1535,117 @@
       },
       "DetectFaceResponse": {
         "$ref": "#/components/schemas/SearchFaceByImageResponse"
+      },
+      "SearchFaceBody": {
+        "type": "object",
+        "properties": {
+          "collectionId": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "Example 1": {
+            "collectionId": "test-collection",
+            "image": "/9j/4QsgRXh...uO/jT9Wf/9k="
+          }
+        }
+      },
+      "SearchFaceResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "face": {
+              "type": "object",
+              "properties": {
+                "BoundingBox": {
+                  "type": "object",
+                  "properties": {
+                    "Height": {
+                      "type": "number"
+                    },
+                    "Left": {
+                      "type": "number"
+                    },
+                    "Top": {
+                      "type": "number"
+                    },
+                    "Width": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "Confidence": {
+                  "type": "number"
+                },
+                "ExternalImageId": {
+                  "type": "string"
+                },
+                "FaceId": {
+                  "type": "string"
+                },
+                "ImageId": {
+                  "type": "string"
+                },
+                "IndexFacesModelVersion": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "Example 1": [
+            {
+              "face": {
+                "BoundingBox": {
+                  "Height": 0.527351975440979,
+                  "Left": 0.27057701349258423,
+                  "Top": 0.3046559989452362,
+                  "Width": 0.49737998843193054
+                },
+                "Confidence": 99.99930572509766,
+                "ExternalImageId": "Leor",
+                "FaceId": "6d7925bd-bc9e-4364-8e99-5c822bc27849",
+                "ImageId": "07937681-040a-3bb5-9b21-b04813157d65",
+                "IndexFacesModelVersion": "7.0"
+              }
+            },
+            {
+              "face": {
+                "BoundingBox": {
+                  "Height": 0.6196410059928894,
+                  "Left": 0.14861400425434113,
+                  "Top": 0.22317300736904144,
+                  "Width": 0.5956529974937439
+                },
+                "Confidence": 99.99930572509766,
+                "ExternalImageId": "Melissa",
+                "FaceId": "da63a7cd-18ea-4387-a067-d212790349ec",
+                "ImageId": "51bbf09d-6491-31a9-b1f6-0ef47063486c",
+                "IndexFacesModelVersion": "7.0"
+              }
+            },
+            {
+              "face": {
+                "BoundingBox": {
+                  "Height": 0.607026994228363,
+                  "Left": 0.23435400426387787,
+                  "Top": 0.33496201038360596,
+                  "Width": 0.5842509865760803
+                },
+                "Confidence": 99.99970245361328,
+                "ExternalImageId": "Bella",
+                "FaceId": "a2fcf7d3-7734-4706-9564-4d6ff33a2b6f",
+                "ImageId": "07d6d5f3-8267-3ad9-9561-72cb506a5376",
+                "IndexFacesModelVersion": "7.0"
+              }
+            }
+          ]
+        }
       }
     }
   }
