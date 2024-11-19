@@ -724,6 +724,9 @@
     },
     "/searchface": {
       "post": {
+        "tags": [
+          "face"
+        ],
         "summary": "Search faces",
         "description": "Search faces in image against the collection",
         "operationId": "post-searchface",
@@ -758,30 +761,15 @@
                       {
                         "face": {
                           "BoundingBox": {
-                            "Height": 0.527351975440979,
-                            "Left": 0.27057701349258423,
-                            "Top": 0.3046559989452362,
-                            "Width": 0.49737998843193054
+                            "Height": 0.6157159805297852,
+                            "Left": 0.19830100238323212,
+                            "Top": 0.20195600390434265,
+                            "Width": 0.5912119746208191
                           },
-                          "Confidence": 99.99930572509766,
+                          "Confidence": 99.99979400634766,
                           "ExternalImageId": "Leor",
-                          "FaceId": "6d7925bd-bc9e-4364-8e99-5c822bc27849",
-                          "ImageId": "07937681-040a-3bb5-9b21-b04813157d65",
-                          "IndexFacesModelVersion": "7.0"
-                        }
-                      },
-                      {
-                        "face": {
-                          "BoundingBox": {
-                            "Height": 0.6196410059928894,
-                            "Left": 0.14861400425434113,
-                            "Top": 0.22317300736904144,
-                            "Width": 0.5956529974937439
-                          },
-                          "Confidence": 99.99930572509766,
-                          "ExternalImageId": "Melissa",
-                          "FaceId": "da63a7cd-18ea-4387-a067-d212790349ec",
-                          "ImageId": "51bbf09d-6491-31a9-b1f6-0ef47063486c",
+                          "FaceId": "bfa31a2c-7b14-429e-b7a3-03a8c8e634ac",
+                          "ImageId": "ca992a2a-71e6-3f07-9298-5641ab275e78",
                           "IndexFacesModelVersion": "7.0"
                         }
                       },
@@ -799,6 +787,9 @@
                           "ImageId": "07d6d5f3-8267-3ad9-9561-72cb506a5376",
                           "IndexFacesModelVersion": "7.0"
                         }
+                      },
+                      {
+                        "message": "Face not identified"
                       }
                     ]
                   }
@@ -1594,6 +1585,9 @@
                   "type": "string"
                 }
               }
+            },
+            "message": {
+              "type": "string"
             }
           }
         },
@@ -1602,30 +1596,15 @@
             {
               "face": {
                 "BoundingBox": {
-                  "Height": 0.527351975440979,
-                  "Left": 0.27057701349258423,
-                  "Top": 0.3046559989452362,
-                  "Width": 0.49737998843193054
+                  "Height": 0.6157159805297852,
+                  "Left": 0.19830100238323212,
+                  "Top": 0.20195600390434265,
+                  "Width": 0.5912119746208191
                 },
-                "Confidence": 99.99930572509766,
+                "Confidence": 99.99979400634766,
                 "ExternalImageId": "Leor",
-                "FaceId": "6d7925bd-bc9e-4364-8e99-5c822bc27849",
-                "ImageId": "07937681-040a-3bb5-9b21-b04813157d65",
-                "IndexFacesModelVersion": "7.0"
-              }
-            },
-            {
-              "face": {
-                "BoundingBox": {
-                  "Height": 0.6196410059928894,
-                  "Left": 0.14861400425434113,
-                  "Top": 0.22317300736904144,
-                  "Width": 0.5956529974937439
-                },
-                "Confidence": 99.99930572509766,
-                "ExternalImageId": "Melissa",
-                "FaceId": "da63a7cd-18ea-4387-a067-d212790349ec",
-                "ImageId": "51bbf09d-6491-31a9-b1f6-0ef47063486c",
+                "FaceId": "bfa31a2c-7b14-429e-b7a3-03a8c8e634ac",
+                "ImageId": "ca992a2a-71e6-3f07-9298-5641ab275e78",
                 "IndexFacesModelVersion": "7.0"
               }
             },
@@ -1643,6 +1622,9 @@
                 "ImageId": "07d6d5f3-8267-3ad9-9561-72cb506a5376",
                 "IndexFacesModelVersion": "7.0"
               }
+            },
+            {
+              "message": "Face not identified"
             }
           ]
         }
